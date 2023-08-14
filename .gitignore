@@ -2,3 +2,5 @@ node_modules
 build
 dist
 db/app.db
+
+.env
