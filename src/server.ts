@@ -1,11 +1,15 @@
 import fastify from 'fastify'
 import { knex } from './database'
+import crypto from 'node:crypto'
 
 const app = fastify()
 
 app.get('/hello', async (request, reply) => {
-  const tables = knex('sqlite_schema').select('*')
-  return tables
+  const transaction = await knex('transactions')
+    .select('id', 'title')
+    .orderBy('id', 'desc')
+
+  return transaction
 })
 
 app
