@@ -3,6 +3,22 @@ import { knex } from '../database'
 import z from 'zod'
 import crypto from 'node:crypto'
 export async function transactionsRoutes(app: FastifyInstance) {
+  app.get('/', async () => {
+    const transactions = await knex('transactions').select('*')
+    return { transactions }
+  })
+
+  app.get('/:id', async (req) => {
+    const parShcema = z.object({
+      id: z.string().uuid(),
+    })
+    const { id } = parShcema.parse(req.params)
+    const transaction = await knex('transactions')
+      .select('*')
+      .where({ id })
+      .first()
+    return { transaction }
+  })
   app.post('/', async (req, res) => {
     const schema = z.object({
       amount: z.number(),
