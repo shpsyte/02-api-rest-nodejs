@@ -5,7 +5,7 @@ POST {{ baseUrl }}/transact
 Content-Type: application/json
 
 {
-   "amount" : "100",
+   "amount" : 100,
    "title": "test title",
    "type": "credit"
 } 
