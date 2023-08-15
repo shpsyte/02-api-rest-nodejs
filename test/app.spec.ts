@@ -3,6 +3,7 @@ import request from 'supertest'
 import { app } from '../src/app'
 import { FastifyInstance } from 'fastify/types/instance'
 import { execSync } from 'node:child_process'
+import exp from 'node:constants'
 describe('app test', () => {
   const BASE_URL = ''
   const _server = {} as FastifyInstance
@@ -102,5 +103,37 @@ describe('app test', () => {
         title: expect.any(String),
       }),
     )
+  })
+
+  it('should be able to get a summary', async () => {
+    const creditRes = await request(app.server).post(`/transact`).send({
+      title: 'test create',
+      amount: 200,
+      type: 'credit',
+    })
+    const cookies = creditRes.headers['set-cookie']
+
+    await request(app.server)
+      .post(`/transact`)
+      .send({
+        title: 'test create',
+        amount: 80,
+        type: 'debit',
+      })
+      .set('Cookie', cookies)
+
+    const summaryResponse = await request(app.server)
+      .get(`/transact/summary`)
+      .set('Cookie', cookies)
+
+    const expectedValue = { summary: { total: 120 } }
+
+    expect(
+      summaryResponse.body,
+      `
+      expected: ${JSON.stringify(expectedValue)}
+      got: ${JSON.stringify(summaryResponse.body)}
+    `,
+    ).toEqual(expectedValue)
   })
 })

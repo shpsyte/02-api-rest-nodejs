@@ -75,7 +75,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
     await knex('transactions')
       .insert({
         id: crypto.randomUUID(),
-        amount: type === 'debit' ? -amount : amount,
+        amount: type === 'debit' ? amount * -1 : amount,
         title,
         session_id: sessionId,
       })

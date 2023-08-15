@@ -7,7 +7,7 @@ Content-Type: application/json
 {
    "amount" : 100,
    "title": "test title",
-   "type": "credit"
+   "type": "debit"
 } 
   
 
