@@ -18,3 +18,8 @@ Content-Type: application/json
 
 ### 
 GET {{ baseUrl }}/transact/b126e7f5-a497-40d2-ac8a-6b1a345d9a9c
+
+
+###
+GET {{ baseUrl }}/transact/summary
+Content-Type: application/json
