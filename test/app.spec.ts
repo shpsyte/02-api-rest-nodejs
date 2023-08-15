@@ -70,4 +70,37 @@ describe('app test', () => {
       }),
     ])
   })
+
+  it('should be able to get a specfic transation', async () => {
+    const input = {
+      title: 'test create',
+      amount: 5000,
+      type: 'credit',
+    }
+
+    const responseCreate = await request(app.server)
+      .post(`/transact`)
+      .send(input)
+
+    const cookies = responseCreate.headers['set-cookie']
+
+    const response = await request(app.server)
+      .get(`/transact`)
+      .set('Cookie', cookies)
+      .expect(200)
+
+    const transactionId = response.body.transactions[0].id
+
+    const transaction = await request(app.server)
+      .get(`/transact/${transactionId}`)
+      .set('Cookie', cookies)
+      .expect(200)
+
+    expect(transaction.body.transaction).toEqual(
+      expect.objectContaining({
+        id: transactionId,
+        title: expect.any(String),
+      }),
+    )
+  })
 })

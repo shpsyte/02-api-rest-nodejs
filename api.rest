@@ -17,7 +17,7 @@ Content-Type: application/json
 
 
 ### 
-GET {{ baseUrl }}/transact/20a5b7a5-4431-434b-9e9a-357a4163abe78
+GET {{ baseUrl }}/transact/20a5b7a5-4431-434b-9e9a-357a4163abe8
 
 
 ###
