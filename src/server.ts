@@ -4,7 +4,7 @@ import { app } from './app'
 app
   .listen({
     port: env.PORT || 3333,
-    host: 'localhost',
+    host: '0.0.0.0',
   })
   .then((address) => {
     console.log(`🦊 Server listening at: ${address}`)
